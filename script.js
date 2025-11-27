@@ -510,26 +510,22 @@ function initGoogleSignIn() {
 }
 
 function googleSignIn() {
-    // Pour une vraie implémentation, utilisez Google Identity Services
-    // Ici, on simule juste l'interface
-    const CLIENT_ID = 'VOTRE_CLIENT_ID.apps.googleusercontent.com';
+    const CLIENT_ID = '835383822570-eplmtddi7aemf255h3mh8n3c24gargrc.apps.googleusercontent.com'; // Mets ton CLIENT_ID ici
     
-    // Simulation pour l'exemple
-    alert('Pour activer la synchronisation Google Drive:\n1. Créez un projet dans Google Cloud Console\n2. Activez Google Drive API\n3. Ajoutez votre CLIENT_ID dans le code');
-    
-    // Code réel à utiliser avec Google Identity Services:
-    /*
-    google.accounts.oauth2.initTokenClient({
+    const tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/drive.file',
         callback: (response) => {
-            googleAccessToken = response.access_token;
-            googleUser = { name: 'User' };
-            updateGoogleButtonText();
-            syncToGoogleDrive();
+            if (response.access_token) {
+                googleAccessToken = response.access_token;
+                googleUser = { name: 'User' };
+                updateGoogleButtonText();
+                syncToGoogleDrive();
+            }
         }
-    }).requestAccessToken();
-    */
+    });
+    
+    tokenClient.requestAccessToken();
 }
 
 function googleSignOut() {
