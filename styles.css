@@ -1,0 +1,855 @@
+:root {
+    --bg-body: #121212;
+    --bg-card: #1e1e1e;
+    --bg-details: #262626;
+    --bg-input: #2d2d2d;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    
+    --status-inprogress: #f59e0b;
+    --status-waiting: #a855f7;
+    --status-todo: #6b7280;
+    --status-done: #10b981;
+    --status-monitor: #06b6d4;
+    
+    --danger: #ef4444;
+    --border: #333;
+    
+    --priority-normal: #eab308;
+    --priority-medium: #f97316;
+    --priority-urgent: #ef4444;
+}
+
+/* THÈMES SAISONNIERS */
+body.theme-spring {
+    --bg-body: #1a2e1a;
+    --bg-card: #234023;
+    --primary: #4ade80;
+    --primary-hover: #22c55e;
+}
+
+body.theme-summer {
+    --bg-body: #1a1a2e;
+    --bg-card: #2d2d4a;
+    --primary: #fbbf24;
+    --primary-hover: #f59e0b;
+}
+
+body.theme-autumn {
+    --bg-body: #2e1a1a;
+    --bg-card: #4a2d2d;
+    --primary: #fb923c;
+    --primary-hover: #f97316;
+}
+
+body.theme-winter {
+    --bg-body: #1a2333;
+    --bg-card: #2d3b4d;
+    --primary: #67e8f9;
+    --primary-hover: #22d3ee;
+}
+
+/* DÉCORS ÉVÉNEMENTS */
+body.event-christmas::before {
+    content: '🎄';
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 3rem;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 999;
+    animation: float 3s ease-in-out infinite;
+}
+
+body.event-christmas::after {
+    content: '❄️';
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: float 4s ease-in-out infinite;
+}
+
+body.event-halloween::before {
+    content: '🎃';
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 3rem;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 999;
+    animation: float 3s ease-in-out infinite;
+}
+
+body.event-easter::before {
+    content: '🐰';
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 3rem;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 999;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* SCROLLBAR PERSONNALISÉE */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    padding: 15px;
+    font-size: 15px;
+    transition: background-color 0.3s;
+    overflow-x: hidden;
+}
+
+.container { 
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+}
+
+h1 { 
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--primary);
+    font-weight: 700;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+h1 span:not(#extNameTitle),
+h1 a {
+    align-self: flex-end;
+    transform: translateY(-2px);
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* Correction alignement - pas de margin-bottom dans le header */
+.header-actions .language-selector,
+.header-actions .theme-selector {
+    margin-bottom: 0;
+}
+
+.btn-google-signin {
+    height: 36px;
+    padding: 0 12px;
+    background: white;
+    border: 1px solid #dadce0;
+    color: #3c4043;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-google-signin:hover {
+    background: #f8f9fa;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.btn-google-signin img {
+    width: 18px;
+    height: 18px;
+}
+
+.language-selector,
+.theme-selector {
+    height: 36px;
+    padding: 0 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.language-selector:hover,
+.theme-selector:hover {
+    border-color: var(--primary);
+}
+
+.btn-header {
+    height: 36px;
+    width: 36px;
+    padding: 0;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-header:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.btn-header i {
+    font-size: 1rem;
+}
+
+.btn-new-task {
+    width: auto !important;
+    padding: 0 16px !important;
+    gap: 8px;
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+}
+
+.btn-new-task:hover {
+    background: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+.btn { 
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-primary { 
+    background: var(--primary);
+}
+
+.btn-primary:hover { 
+    background: var(--primary-hover);
+}
+
+.btn-danger { 
+    background: var(--danger);
+}
+
+.btn-secondary { 
+    background: #444;
+}
+
+.btn-sm { 
+    padding: 4px 8px;
+    font-size: 0.8rem;
+}
+
+/* ONGLETS (TABS) - CENTRÉS */
+.tabs-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    overflow-x: auto;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+.tab {
+    position: relative;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    padding: 12px 25px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    min-width: 110px;
+    text-align: center;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.tab:hover .tab-delete {
+    opacity: 1;
+}
+
+.tab:hover .tab-select-all {
+    opacity: 1;
+}
+
+.tab.active {
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+.tab-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background-color: var(--danger);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 4px;
+    min-width: 10px;
+    text-align: center;
+    box-shadow: 0 0 2px black;
+}
+
+.tab-delete {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    background: var(--danger);
+    color: white;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.tab-delete:hover {
+    background: #dc2626;
+}
+
+.tab-select-all {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background: var(--primary);
+    color: white;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.tab-select-all:hover {
+    background: var(--primary-hover);
+}
+
+.tab-input {
+    background: var(--bg-input);
+    border: 2px solid var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+}
+
+.add-tab-btn {
+    background: var(--bg-card);
+    color: var(--primary);
+    border: 1px dashed var(--primary);
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.add-tab-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.new-tab-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-card);
+    padding: 8px 12px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    min-width: 150px;
+}
+
+.new-tab-input-wrapper input {
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    width: 120px;
+}
+
+/* BOUTON COPIER FLOTTANT */
+.copy-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    z-index: 500;
+    transition: all 0.2s;
+}
+
+.copy-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.copy-button.visible {
+    display: flex;
+}
+
+/* WRAPPER LISTE DES TÂCHES - CENTRÉ ET RESPONSIVE */
+.task-list-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.task-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Sur desktop (> 768px), 50% de largeur */
+@media (min-width: 768px) {
+    .task-list {
+        width: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Sur mobile, 100% */
+@media (max-width: 767px) {
+    .task-list {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+/* Groupes de statuts */
+.status-group {
+    margin-bottom: 30px;
+}
+
+.status-group-header {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    padding: 0 0 10px 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-group-badge {
+    font-size: 0.75rem;
+    background: var(--primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.status-group-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.children-container {
+    margin-left: 30px;
+    border-left: 2px solid #333;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.task-card {
+    background: var(--bg-card);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.task-card:hover .task-delete {
+    opacity: 1;
+}
+
+.task-card.drag-over {
+    border: 2px dashed var(--primary);
+    background: #2a2a3a;
+}
+
+.task-card.selected {
+    border: 2px solid var(--primary);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* Indicateur visuel de destination lors du drag */
+.task-card.will-unparent {
+    border-left: 4px solid #10b981 !important;
+    transform: translateX(-15px);
+    box-shadow: -5px 0 20px rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.task-delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    background: var(--danger);
+    color: white;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.task-delete:hover {
+    background: #dc2626;
+}
+
+.task-header { 
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.drag-handle {
+    cursor: grab;
+    color: #555;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+.drag-handle:active { 
+    cursor: grabbing;
+    color: var(--primary);
+}
+
+.task-title { 
+    font-weight: 600;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.task-done-title { 
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.badge-status { 
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.bs-todo { 
+    background: var(--status-todo);
+    color: white;
+}
+
+.bs-inprogress { 
+    background: var(--status-inprogress);
+    color: #1a1a1a;
+}
+
+.bs-waiting { 
+    background: var(--status-waiting);
+    color: white;
+}
+
+.bs-done { 
+    background: var(--status-done);
+    color: #1a1a1a;
+}
+
+.bs-monitor { 
+    background: var(--status-monitor);
+    color: #1a1a1a;
+}
+
+.action-btn {
+    background: #2d2d2d;
+    color: #ccc;
+    border: 1px solid #333;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.action-btn:hover { 
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.task-details {
+    display: none;
+    background: var(--bg-details);
+    padding: 15px;
+    border-top: 1px solid var(--border);
+}
+
+.note-item {
+    position: relative;
+    padding: 8px 30px 8px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 5px;
+}
+
+.note-item:last-child {
+    border-bottom: none;
+}
+
+.note-delete {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--danger);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 1rem;
+    padding: 2px 5px;
+}
+
+.note-item:hover .note-delete {
+    opacity: 1;
+}
+
+.note-date {
+    font-size: 0.75rem;
+    color: #666;
+    margin-right: 5px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: block;
+    box-sizing: border-box;
+}
+
+label { 
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Modal avec backdrop plus sombre pour changelog */
+#changelogModal {
+    background: rgba(0, 0, 0, 0.92) !important;
+}
+
+#changelogModal .modal-content {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.changelog-version {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+
+.changelog-version h3 {
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.changelog-date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.changelog-version ul {
+    line-height: 1.8;
+    margin: 0;
+    padding-left: 20px;
+}
+
+.changelog-version li {
+    margin-bottom: 5px;
+}
+
+/* Zone de drop pour sortir les sous-tâches - CACHÉE */
+.drop-zone-root {
+    display: none !important;
+}
